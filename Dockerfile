@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . . 
 
-RUN yarn build
+RUN yarn build 
 
 CMD yarn start 
