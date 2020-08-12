@@ -41,7 +41,7 @@ export default class BeastieBot {
 
     beastie.twitchClient = beastie.initTwitch();
     beastie.broadcasterId = (await broadcaster.getProfile())?.id;
-    //beastie.twitchWebhooks = beastie.initTwitchWebhooks();
+    beastie.twitchWebhooks = await beastie.initTwitchWebhooks();
     beastie.discordClient = beastie.initDiscord();
     beastie.twitterClient = beastie.initTwitter();
 
@@ -78,25 +78,25 @@ export default class BeastieBot {
     return twitchClient;
   }
 
-  initTwitchWebhooks() {
+  async initTwitchWebhooks() {
     const twitchWebhooks = new TwitchWebhooksServer();
     BeastieLogger.debug(`Webhooks broadcasterId ${this.broadcasterId}`);
-    twitchWebhooks.connect(this.broadcasterId);
+    await twitchWebhooks.connect(this.broadcasterId);
 
     // Twitch Webhooks Event Listeners that affect other services
-    twitchWebhooks.server.on("streams", async payload => {
-      await this.onStreamChange(payload);
-    });
+    // twitchWebhooks.server.on("streams", async payload => {
+    //   await this.onStreamChange(payload);
+    // });
 
-    twitchWebhooks.server.on("users/follows", async payload => {
-      await this.onFollow(payload);
-    });
+    // twitchWebhooks.server.on("users/follows", async payload => {
+    //   await this.onFollow(payload);
+    // });
 
-    twitchWebhooks.server.on("subscriptions/events", async payload => {
-      await this.onSubscribe(payload);
-    });
+    // twitchWebhooks.server.on("subscriptions/events", async payload => {
+    //   await this.onSubscribe(payload);
+    // });
 
-    BeastieLogger.info("webhooks init finished");
+    BeastieLogger.info("twitch webhooks init finished");
     return twitchWebhooks;
   }
 

@@ -63,13 +63,14 @@ export default class BeastieTwitchService {
       if (!self) await this.onMessage(channel, tags, message);
     });
 
-    this.client.on("hosting", async (channel, target, viewers) => {
-      try {
-        await this.onHosting(target, viewers);
-      } catch (e) {
-        BeastieLogger.warn(`Failed handling hosting: ${e}`);
-      }
-    });
+    // TODO: SOMETHING IN HERE IS ERRORING WHEN BEASTIE STARTS UP AND WE ARE CURRENTLY HOSTING SOMEONE
+    // this.client.on("hosting", async (channel, target, viewers) => {
+    //   try {
+    //     await this.onHosting(target, viewers);
+    //   } catch (e) {
+    //     BeastieLogger.warn(`Failed handling hosting: ${e}`);
+    //   }
+    // });
 
     this.client.on("connected", async () => {
       BeastieLogger.info(`Beastie has connected to twitch`);
@@ -228,19 +229,19 @@ export default class BeastieTwitchService {
       return;
     }
 
-    const startResponse = startRaiding(this, target, viewers);
-    await this.say(startResponse);
+    //const startResponse = startRaiding(this, target, viewers);
+    //await this.say(startResponse);
 
-    setTimeout(async () => {
-      try {
-        const endResponse = endRaid(this.client, target, this.raidReward);
-        this.activeRaid = endResponse.activeRaid;
-        this.raidTeam = endResponse.raidTeam;
-        this.raidReward = endResponse.raidReward;
-        await this.say(endResponse.messages);
-      } catch (e) {
-        BeastieLogger.warn(`Failed to end raid: ${e}`);
-      }
-    }, raidTimer);
+    // setTimeout(async () => {
+    //   try {
+    //     const endResponse = endRaid(this.client, target, this.raidReward);
+    //     this.activeRaid = endResponse.activeRaid;
+    //     this.raidTeam = endResponse.raidTeam;
+    //     this.raidReward = endResponse.raidReward;
+    //     await this.say(endResponse.messages);
+    //   } catch (e) {
+    //     BeastieLogger.warn(`Failed to end raid: ${e}`);
+    //   }
+    // }, raidTimer);
   };
 }

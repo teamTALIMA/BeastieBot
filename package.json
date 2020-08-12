@@ -20,12 +20,17 @@
     "start:watch": "nodemon --inspect dist/index.js",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"yarn build:watch\" \"yarn start:watch\"",
     "build-and-start": "yarn build && yarn start",
-    "clean": "rimraf dist/ node_modules/"
+    "clean": "rimraf dist/ node_modules/",
+    "netlify": "chmod +x ./netlify-env.sh && ./netlify-env.sh && yarn build-and-start"
   },
   "dependencies": {
     "aws-sdk": "^2.678.0",
+    "axios": "^0.19.2",
     "discord.js": "^12.2.0",
     "dotenv": "^8.0.0",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^9.1.0",
     "node-fetch": "^1.1.0",
     "source-map-support": "^0.5.12",
     "tmi.js": "^1.5.0",
@@ -36,6 +41,7 @@
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
+    "@types/koa": "^2.11.3",
     "@types/node": "^12.0.6",
     "@types/tmi.js": "^1.4.0",
     "@types/twitter": "^1.7.0",

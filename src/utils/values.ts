@@ -73,6 +73,50 @@ export enum POST_EVENT {
   "END_OF_STREAM"
 }
 
+// Twitch Webhooks
+export const TWITCH_WEBHOOK = {
+  STREAM_CHANGED: {
+    name: "STREAM_CHANGED",
+    urlPath: "streams",
+    urlParams: "?user_id=BROADCASTER"
+  },
+  USERS_FOLLOWS: {
+    name: "USERS_FOLLOWS",
+    urlPath: "users/follows",
+    urlParams: "?first=1&to_id=BROADCASTER"
+  },
+  SUBSCRIPTION_EVENTS: {
+    name: "SUBSCRIPTION_EVENTS",
+    urlPath: "subscriptions/events",
+    urlParams: "?broadcaster_id=BROADCASTER&first=1"
+  },
+  EXTENSION_TRANSACTION_CREATED: {
+    name: "EXTENSION_TRANSACTION_CREATED",
+    urlPath: "extensions/transactions",
+    urlParams: "?extension_id=BROADCASTER&first=1"
+  },
+  HYPE_TRAIN_EVENT: {
+    name: "HYPE_TRAIN_EVENT",
+    urlPath: "hypetrain/events",
+    urlParams: "?broadcaster_id=BROADCASTER&first=1"
+  },
+  USER_CHANGED: {
+    name: "USER_CHANGED",
+    urlPath: "users",
+    urlParams: "?id=1234"
+  },
+  MODERATOR_CHANGE_EVENTS: {
+    name: "MODERATOR_CHANGE_EVENTS",
+    urlPath: "moderation/moderators/events",
+    urlParams: "?broadcaster_id=BROADCASTERfirst=1"
+  },
+  CHANNEL_BAN_CHANGE_EVENTS: {
+    name: "CHANNEL_BAN_CHANGE_EVENTS",
+    urlPath: "moderation/banned/events",
+    urlParams: "?broadcaster_id=BROADCASTERfirst=1"
+  }
+};
+
 // Twitch Intervals Feature
 export const awesomenessInterval = 1000 * 60 * 5; // KEEP MILLISECONDS, used by database
 export const awesomenessIntervalAmount = 5;
