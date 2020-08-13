@@ -77,43 +77,51 @@ export enum POST_EVENT {
 export const TWITCH_WEBHOOK = {
   STREAM_CHANGED: {
     name: "STREAM_CHANGED",
-    urlPath: "streams",
-    urlParams: "?user_id=BROADCASTER"
+    apiPath: "streams",
+    urlParams: "?user_id=BROADCASTER",
+    callbackPath: `/twitch-webhook/`
   },
   USERS_FOLLOWS: {
     name: "USERS_FOLLOWS",
-    urlPath: "users/follows",
-    urlParams: "?first=1&to_id=BROADCASTER"
+    apiPath: "users/follows",
+    urlParams: "?first=1&to_id=BROADCASTER",
+    callbackPath: `/twitch-webhook/`
   },
   SUBSCRIPTION_EVENTS: {
     name: "SUBSCRIPTION_EVENTS",
-    urlPath: "subscriptions/events",
-    urlParams: "?broadcaster_id=BROADCASTER&first=1"
+    apiPath: "subscriptions/events",
+    urlParams: "?broadcaster_id=BROADCASTER&first=1",
+    callbackPath: `/twitch-webhook/`
   },
   EXTENSION_TRANSACTION_CREATED: {
     name: "EXTENSION_TRANSACTION_CREATED",
-    urlPath: "extensions/transactions",
-    urlParams: "?extension_id=BROADCASTER&first=1"
+    apiPath: "extensions/transactions",
+    urlParams: "?extension_id=BROADCASTER&first=1",
+    callbackPath: `/twitch-webhook/`
   },
   HYPE_TRAIN_EVENT: {
     name: "HYPE_TRAIN_EVENT",
-    urlPath: "hypetrain/events",
-    urlParams: "?broadcaster_id=BROADCASTER&first=1"
+    apiPath: "hypetrain/events",
+    urlParams: "?broadcaster_id=BROADCASTER&first=1",
+    callbackPath: `/twitch-webhook/`
   },
   USER_CHANGED: {
     name: "USER_CHANGED",
-    urlPath: "users",
-    urlParams: "?id=1234"
+    apiPath: "users",
+    urlParams: "?id=1234",
+    callbackPath: `/twitch-webhook/`
   },
   MODERATOR_CHANGE_EVENTS: {
     name: "MODERATOR_CHANGE_EVENTS",
-    urlPath: "moderation/moderators/events",
-    urlParams: "?broadcaster_id=BROADCASTERfirst=1"
+    apiPath: "moderation/moderators/events",
+    urlParams: "?broadcaster_id=BROADCASTERfirst=1",
+    callbackPath: `/twitch-webhook/`
   },
   CHANNEL_BAN_CHANGE_EVENTS: {
     name: "CHANNEL_BAN_CHANGE_EVENTS",
-    urlPath: "moderation/banned/events",
-    urlParams: "?broadcaster_id=BROADCASTERfirst=1"
+    apiPath: "moderation/banned/events",
+    urlParams: "?broadcaster_id=BROADCASTERfirst=1",
+    callbackPath: `/twitch-webhook/`
   }
 };
 

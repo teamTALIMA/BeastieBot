@@ -54,9 +54,11 @@ export default class BeastieBot {
   async destroy() {
     let results = await Promise.allSettled([
       this.twitchClient.destroy(),
+      this.twitchWebhooks.destroy(),
       this.discordClient.destroy(),
       this.twitterClient.destroy()
     ]);
+
     let rejResult = results.find(
       rsp => rsp.status === "rejected"
     ) as PromiseRejectedResult;
@@ -67,6 +69,7 @@ export default class BeastieBot {
     delete this.twitchClient;
     delete this.discordClient;
     delete this.twitterClient;
+    delete this.twitchWebhooks;
   }
 
   initTwitch() {
@@ -80,21 +83,18 @@ export default class BeastieBot {
 
   async initTwitchWebhooks() {
     const twitchWebhooks = new TwitchWebhooksServer();
-    BeastieLogger.debug(`Webhooks broadcasterId ${this.broadcasterId}`);
     await twitchWebhooks.connect(this.broadcasterId);
 
     // Twitch Webhooks Event Listeners that affect other services
-    // twitchWebhooks.server.on("streams", async payload => {
-    //   await this.onStreamChange(payload);
-    // });
+    twitchWebhooks.emitter.on("stream changed", async payload => {
+      await this.onStreamChange(payload);
+    });
 
-    // twitchWebhooks.server.on("users/follows", async payload => {
-    //   await this.onFollow(payload);
-    // });
+    twitchWebhooks.emitter.on("users follows", async payload => {
+      await this.onFollow(payload);
+    });
 
-    // twitchWebhooks.server.on("subscriptions/events", async payload => {
-    //   await this.onSubscribe(payload);
-    // });
+    // TODO: Add listener for subscriber event
 
     BeastieLogger.info("twitch webhooks init finished");
     return twitchWebhooks;
@@ -138,44 +138,45 @@ export default class BeastieBot {
   }
 
   private async onStreamChange(payload) {
-    const stream = payload.data[0];
-    const response = handleStreamChange(stream, this.state.curStreamId);
+    if (payload.data[0]) {
+      const stream = payload.data[0];
+      const response = handleStreamChange(stream, this.state.curStreamId);
 
-    this.state.isStreaming = response.live;
-    this.state.curStreamId = response.streamId.toString();
+      this.state.isStreaming = response.live;
+      this.state.curStreamId = response.streamId.toString();
 
-    if (response.newStream) {
-      this.twitterClient
-        .post(POST_EVENT.TWITTER_LIVE, this.state.curStreamId)
-        .catch(reason => {
+      if (response.newStream) {
+        this.twitterClient
+          .post(POST_EVENT.TWITTER_LIVE, this.state.curStreamId)
+          .catch(reason => {
+            BeastieLogger.warn(
+              `Failed to complete twitter POST_EVENT.TWITTER_LIVE: ${reason}`
+            );
+          });
+        this.discordClient.post(POST_EVENT.DISCORD_LIVE).catch(reason => {
           BeastieLogger.warn(
-            `Failed to complete twitter POST_EVENT.TWITTER_LIVE: ${reason}`
+            `Failed to complete discord POST_EVENT.DISCORD_LIVE: ${reason}`
           );
         });
-      this.discordClient.post(POST_EVENT.DISCORD_LIVE).catch(reason => {
-        BeastieLogger.warn(
-          `Failed to complete discord POST_EVENT.DISCORD_LIVE: ${reason}`
-        );
-      });
-    } else if (!this.state.isStreaming) {
+        // TODO: Add file with functionality for Beastie to post to places outside of teamTALIMA's community
+      }
+    } else if (this.state.curStreamId !== "0") {
       try {
         await this.twitchClient.post(POST_EVENT.END_OF_STREAM, null);
       } catch (e) {
-        BeastieLogger.warn(`Failed to post subscription message: ${e}`);
+        BeastieLogger.warn(`Failed to post end-of-stream message: ${e}`);
       }
     }
-    // handle title change
-    // handle game_id change
 
     this.twitchClient.toggleStreamIntervals(this.state.isStreaming);
   }
 
   private async onFollow(payload) {
     try {
-      const { from_name } = payload.event.data[0];
+      const { from_name } = payload.data[0];
       await this.twitchClient.post(POST_EVENT.TWITCH_NEW_FOLLOW, from_name);
     } catch (e) {
-      BeastieLogger.warn(`Failed to post subscription message: ${e}`);
+      BeastieLogger.warn(`Failed to post follow message: ${e}`);
     }
     // twitter and discord post for follow milestones per stream
   }

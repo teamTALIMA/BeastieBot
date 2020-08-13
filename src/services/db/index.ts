@@ -8,6 +8,8 @@ export const dynamoDisabled = config.AWS_ENDPOINT === "disabled";
 
 if (!dynamoDisabled) {
   AWS.config.update({
+    accessKeyId: config.ENV_AWS_ACCESS_KEY_ID,
+    secretAccessKey: config.ENV_AWS_SECRET_ACCESS_KEY,
     region: "us-west-2",
     // @ts-ignore
     endpoint: config.AWS_ENDPOINT

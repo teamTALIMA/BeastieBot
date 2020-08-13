@@ -16,7 +16,7 @@ const twitterPosts = async (event, streamId: string) => {
 };
 
 const postLive = (broadcaster: string, streamId: string) => {
-  return `We are LIVE! twitch.tv/${broadcaster}#stream-${streamId} RAWR #GameDev #UnrealEngine #ProceduralGeneration #bot`;
+  return `We are LIVE! twitch.tv/${broadcaster}#stream-${streamId} RAWR #GameDev #MobileGame #UnrealEngine #ProceduralGeneration #bot`;
 };
 
 /*const postFollows5 = () => {

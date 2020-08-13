@@ -20,8 +20,7 @@
     "start:watch": "nodemon --inspect dist/index.js",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"yarn build:watch\" \"yarn start:watch\"",
     "build-and-start": "yarn build && yarn start",
-    "clean": "rimraf dist/ node_modules/",
-    "netlify": "chmod +x ./netlify-env.sh && ./netlify-env.sh && yarn build-and-start"
+    "clean": "rimraf dist/ node_modules/"
   },
   "dependencies": {
     "aws-sdk": "^2.678.0",
