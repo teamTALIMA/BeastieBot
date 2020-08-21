@@ -11,6 +11,10 @@ import {
   beastieDisconnectMessage,
   discordInterval,
   discordIntervalMessage,
+  patreonInterval,
+  patreonIntervalMessage,
+  subscribeInterval,
+  subscribeIntervalMessage,
   POST_EVENT,
   raidMessage,
   raidTimer
@@ -36,6 +40,8 @@ export default class BeastieTwitchService {
   awesomenessInterval: NodeJS.Timeout;
   awesomenessIntervalAmount: number;
   discordInterval: NodeJS.Timeout;
+  patreonInterval: NodeJS.Timeout;
+  subscribeInterval: NodeJS.Timeout;
 
   messageQueue: string[] = [];
   messageQueueLimit: number = 1000 * 1.5;
@@ -77,7 +83,7 @@ export default class BeastieTwitchService {
   }
 
   public async destroy() {
-    BeastieLogger.info("SHUTTING DOWN ON SIGINT");
+    BeastieLogger.info("SHUTTING DOWN TWITCH ON SIGINT");
     await this.onSIGINT();
   }
 
@@ -135,9 +141,23 @@ export default class BeastieTwitchService {
         this.discordInterval = setInterval(async () => {
           await this.say(discordIntervalMessage);
         }, discordInterval);
+      if (this.patreonInterval === undefined)
+        this.patreonInterval = setInterval(async () => {
+          await this.say(patreonIntervalMessage);
+        }, patreonInterval);
+      if (this.subscribeInterval === undefined) {
+        setTimeout(() => {
+          console.log("subscribeInterval set now");
+          this.subscribeInterval = setInterval(async () => {
+            await this.say(subscribeIntervalMessage);
+          }, subscribeInterval);
+        }, subscribeInterval / 2);
+      }
     } else {
       clearInterval(this.awesomenessInterval);
       clearInterval(this.discordInterval);
+      clearInterval(this.patreonInterval);
+      clearInterval(this.subscribeInterval);
     }
   };
 
@@ -148,7 +168,6 @@ export default class BeastieTwitchService {
   };
 
   private onDisconnect = async () => {
-    await this.say(beastieDisconnectMessage);
     clearTimeout(this.messageQueueTimeout);
     this.messageQueueTimeout = null;
   };
@@ -191,6 +210,7 @@ export default class BeastieTwitchService {
             parameters,
             username: tags.username,
             displayName: tags["display-name"],
+            twitchId: tags["user-id"],
             roles: badges
           })
         );

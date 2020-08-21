@@ -15,6 +15,7 @@ export default class BeastieDiscordClient {
 
   discordWelcomeChId: string;
   discordTalimasFeedChId: string;
+  discordStreamAnnouncementsChId: string;
 
   constructor() {
     this.client = new Discord.Client();
@@ -40,7 +41,7 @@ export default class BeastieDiscordClient {
   }
 
   public async destroy() {
-    BeastieLogger.info("SHUTTING DOWN ON SIGINT");
+    BeastieLogger.info("SHUTTING DOWN DISCORD ON SIGINT");
     await this.onSIGINT();
   }
 
@@ -83,10 +84,10 @@ export default class BeastieDiscordClient {
   private discordChannels = event => {
     // TODO: Add handling for different channels?
     switch (event) {
-      case POST_EVENT.LIVE:
-        return this.discordTalimasFeedChId;
+      case POST_EVENT.DISCORD_LIVE:
+        return this.discordStreamAnnouncementsChId;
       default:
-        return this.discordTalimasFeedChId;
+        return this.discordWelcomeChId;
     }
   };
 
@@ -101,7 +102,6 @@ export default class BeastieDiscordClient {
 
   private async onSIGINT() {
     try {
-      await this.say(this.discordTalimasFeedChId, beastieDisconnectMessage);
       await this.client.destroy();
     } catch (e) {
       BeastieLogger.warn(`Failed to send shutdown message because ${e}`);
@@ -115,6 +115,8 @@ export default class BeastieDiscordClient {
 
       this.discordGuildId = response.discordGuildId;
       this.discordWelcomeChId = response.discordWelcomeChId;
+      this.discordStreamAnnouncementsChId =
+        response.discordStreamAnnouncementsChId;
       this.discordTalimasFeedChId = response.discordTalimasFeedChId;
 
       try {

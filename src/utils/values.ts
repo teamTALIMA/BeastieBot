@@ -63,8 +63,9 @@ export const beastieDisconnectMessage = `Goodbye team :) rawr`;
 
 // Social Post Events
 export enum POST_EVENT {
-  "LIVE",
   "NONE",
+  "TWITTER_LIVE",
+  "DISCORD_LIVE",
   "DISCORD_MEMBER_ADD",
   "TWITCH_NEW_SUB",
   "TWITCH_NEW_FOLLOW",
@@ -77,7 +78,13 @@ export const awesomenessInterval = 1000 * 60 * 5; // KEEP MILLISECONDS, used by 
 export const awesomenessIntervalAmount = 5;
 
 export const discordInterval = 1000 * 60 * 20;
-export const discordIntervalMessage = `Hey team! Make sure you don't miss out on joining our Discord guild! Talima hosts voice chats and we organize dev projects on Discord! https://discord.gg/yBXqgus`;
+export const discordIntervalMessage = `Hey team! Make sure you don't miss out on joining our Discord guild! Talima hosts voice chats and we organize dev projects on Discord! https://discord.gg/eZtrhh7`;
+
+export const patreonInterval = 1000 * 60 * 60;
+export const patreonIntervalMessage = `bleedPurple Talima has a Patreon! Your support unlocks special rewards, and enables us to live stream our projects full time. Support Talima on Patreon => https://patreon.com/TalimaVale bleedPurple Thank you!`;
+
+export const subscribeInterval = 1000 * 60 * 60;
+export const subscribeIntervalMessage = `twitchRaid We are applying for Twitch partnership in July! Your viewership and subscriber support means so much, especially now. Subscribe today to join the Beastie Sub Team! => https://www.twitch.tv/subs/teamTALIMA twitchRaid`;
 
 // Raid Feature
 export const raidTimer = 1000 * 60;
