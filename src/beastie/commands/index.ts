@@ -37,6 +37,7 @@ export const commandModules: CommandModule[] = [
   require("./hello").default,
   require("./rawr").default,
   require("./awesomeness/awesomeness").default,
+  //require("./awesomeness/convert").default,
   require("./informational/about").default,
   require("./informational/discord").default,
   require("./informational/patreon").default,

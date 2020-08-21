@@ -46,9 +46,7 @@ The New Beastie is here!
 
 **Usage:**
 
-Start development: `yarn watch`
-
-Build for production `yarn build`
+`./run.sh` _run script that automates dockerization for the app_
 
 **Future:**
 
