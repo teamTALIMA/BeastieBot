@@ -1,4 +1,4 @@
-import AWS = require("aws-sdk");
+import AWS from "aws-sdk";
 import config from "../../config";
 import { awesomenessInterval } from "../../utils/values";
 import { BeastieLogger } from "../../utils/Logging";
