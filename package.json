@@ -12,6 +12,11 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=14.3"
+  },
+  "engineStrict": true,
   "scripts": {
     "dev": "yarn watch",
     "build": "tsc",
