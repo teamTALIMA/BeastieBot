@@ -76,6 +76,11 @@ export default class TwitchWebhooksServer {
     this.server = new Koa();
     this.router = new KoaRouter();
 
+    this.router.get(`/`, ctx => {
+      ctx.body = "yolo";
+      console.log("yolo");
+    });
+
     this.activeWebhooks.forEach(hook => {
       this.router.get(
         `${hook.callbackPath}${hook.apiPath}`,
@@ -112,6 +117,7 @@ export default class TwitchWebhooksServer {
       this.broadcasterId
     );
 
+    BeastieLogger.info(callback);
     await axios
       .post(
         "https://api.twitch.tv/helix/webhooks/hub",
@@ -166,11 +172,10 @@ export default class TwitchWebhooksServer {
         ctx.query[`hub.topic`]
       }]`
     );
-    const leaseSeconds = ctx.query[`hub.lease_seconds`];
-    BeastieLogger.info(leaseSeconds);
     const hubTopic = ctx.query[`hub.topic`].substr(28).replace(/%2F/gi, "/");
 
     if (ctx.query[`hub.mode`] === "subscribe") {
+      const leaseSeconds = ctx.query[`hub.lease_seconds`];
       this.activeWebhooks.forEach(hook => {
         if (hubTopic.substr(0, hook.apiPath.length) === hook.apiPath) {
           this.setSubscriptionTimer(hook, leaseSeconds);

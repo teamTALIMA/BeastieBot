@@ -1,2 +1,1 @@
-sudo docker build -t beastie .
-sudo docker run beastie 
+yarn build-and-start

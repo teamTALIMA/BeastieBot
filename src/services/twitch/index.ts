@@ -165,7 +165,7 @@ export default class BeastieTwitchService {
   // Event Handlers
   private onConnect = async () => {
     await this.client.join(this.broadcasterUsername);
-    await this.say(beastieConnectMessage);
+    //await this.say(beastieConnectMessage);
   };
 
   private onDisconnect = async () => {

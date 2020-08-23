@@ -1,0 +1,23 @@
+name: BeastieBot Deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    name: Deploy BeastieBot
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploying BeastieBot to Ubuntu server
+        uses: appleboy/ssh-action@master
+        with:
+          host: beastiebot.live
+          username: talima
+          key: ${{ secrets.BEASTIEBOT_DEPLOY }}
+          port: 22
+          script: |
+            cd BeastieBot
+            git pull origin master
+            git status

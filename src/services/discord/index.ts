@@ -120,7 +120,7 @@ export default class BeastieDiscordClient {
       this.discordTalimasFeedChId = response.discordTalimasFeedChId;
 
       try {
-        await this.say(this.discordWelcomeChId, "rawr");
+        //await this.say(this.discordWelcomeChId, "rawr");
       } catch (e) {
         BeastieLogger.warn(
           `Failed to say rawr in ${this.discordWelcomeChId}: ${e}`
