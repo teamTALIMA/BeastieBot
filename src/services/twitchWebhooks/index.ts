@@ -77,8 +77,8 @@ export default class TwitchWebhooksServer {
     this.router = new KoaRouter();
 
     this.router.get(`/`, ctx => {
-      ctx.body = "yolo";
-      console.log("yolo");
+      ctx.body = "rawr";
+      console.log("rawr");
     });
 
     this.activeWebhooks.forEach(hook => {
