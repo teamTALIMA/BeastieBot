@@ -22,4 +22,4 @@ jobs:
             git pull origin master
             yarn install --production
             yarn build
-            pm2 start dist/index.js --kill-timeout 4000
+            pm2 start dist/index.js -n beastie --kill-timeout 4000
