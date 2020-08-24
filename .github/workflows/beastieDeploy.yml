@@ -9,7 +9,7 @@ jobs:
     name: Deploy BeastieBot
     runs-on: ubuntu-latest
     steps:
-      - name: Deploying BeastieBot to Ubuntu server
+      - name: Checking BeastieBot status on Ubuntu server
         uses: appleboy/ssh-action@master
         with:
           host: beastiebot.live
