@@ -12,8 +12,8 @@ jobs:
       - name: Deploying new BeastieBot
         uses: appleboy/ssh-action@master
         with:
-          host: beastiebot.live
-          username: talima
+          host: ${{ secrets.BEASTIEBOT_DOMAIN }}
+          username: ${{ secrets.BEASTIEBOT_USER }}
           key: ${{ secrets.BEASTIEBOT_DEPLOY }}
           port: 22
           script: |
