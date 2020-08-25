@@ -92,7 +92,7 @@ export default class BeastieDiscordClient {
   };
 
   public post = async event => {
-    const msg = discordPosts(event);
+    const msg = await discordPosts(event);
     const channel = this.discordChannels(event);
     await this.say(channel, msg);
   };
