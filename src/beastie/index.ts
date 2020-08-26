@@ -160,11 +160,14 @@ export default class BeastieBot {
         });
         // TODO: Add file with functionality for Beastie to post to places outside of teamTALIMA's community
       }
-    } else if (this.state.curStreamId !== "0") {
-      try {
-        await this.twitchClient.post(POST_EVENT.END_OF_STREAM, null);
-      } catch (e) {
-        BeastieLogger.warn(`Failed to post end-of-stream message: ${e}`);
+    } else {
+      this.state.isStreaming = false;
+      if (this.state.curStreamId !== "0") {
+        try {
+          await this.twitchClient.post(POST_EVENT.END_OF_STREAM, null);
+        } catch (e) {
+          BeastieLogger.warn(`Failed to post end-of-stream message: ${e}`);
+        }
       }
     }
 

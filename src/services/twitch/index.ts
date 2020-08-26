@@ -182,12 +182,11 @@ export default class BeastieTwitchService {
 
   private onMessage = async (channel, tags, message) => {
     if (!message.startsWith("!")) {
-      if (this.activeRaid && this.hostedChannel !== "") {
-        checkForRaidMessage(this, channel, tags, message);
-      }
+      // if (this.activeRaid && this.hostedChannel !== "") {
+      //   checkForRaidMessage(this, channel, tags, message);
+      // }
       return;
     }
-    // const [command = "!", para1 = "", para2 = ""] = message.split(" ");
     const [command, ...parameters] = getParameters(message);
     const [para1, para2] = parameters;
 
