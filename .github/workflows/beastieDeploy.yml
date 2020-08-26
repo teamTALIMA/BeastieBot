@@ -20,6 +20,6 @@ jobs:
             cd BeastieBot
             pm2 stop beastie
             git pull origin master
-            yarn install --production
+            yarn install
             yarn build
             pm2 start dist/index.js -n beastie --kill-timeout 4000
