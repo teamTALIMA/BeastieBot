@@ -19,6 +19,7 @@ jobs:
           script: |
             cd BeastieBot
             pm2 stop beastie
+            rm -rf dist
             git pull origin master
             yarn install
             yarn build
