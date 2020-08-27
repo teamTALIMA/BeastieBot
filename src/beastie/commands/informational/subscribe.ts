@@ -3,8 +3,8 @@ import CommandContext from "../utils/commandContext";
 
 const execute = async (context: CommandContext): Promise<string> => {
   return context.platform === "twitch"
-    ? `teamta1RAWR We are applying for Twitch partnership in July! Your viewership and subscriber support means so much, especially now. Subscribe today to join the Beastie Sub Team! => https://www.twitch.tv/subs/teamTALIMA teamta1RAWR`
-    : `We are applying for Twitch partnership in July! Your viewership and subscriber support means so much, especially now. Subscribe today to join the Beastie Sub Team!\n=> https://www.twitch.tv/subs/teamTALIMA Thank you!`;
+    ? `teamta1RAWR We are applying for Twitch partnership! Your viewership and subscriber support means so much, especially now. Subscribe today to join the Beastie Sub Team! => https://www.twitch.tv/subs/teamTALIMA teamta1RAWR`
+    : `We are applying for Twitch partnership! Your viewership and subscriber support means so much, especially now. Subscribe today to join the Beastie Sub Team!\n=> https://www.twitch.tv/subs/teamTALIMA Thank you!`;
 };
 
 const cmdModule = new CommandModule(
