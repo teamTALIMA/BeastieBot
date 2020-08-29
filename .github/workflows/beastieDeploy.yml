@@ -1,0 +1,26 @@
+name: BeastieBot Deploy
+
+on:
+    push:
+        branches: [master]
+
+jobs:
+    deploy:
+        name: Deploy BeastieBot
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploying new BeastieBot
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.BEASTIEBOT_DOMAIN }}
+                  username: ${{ secrets.BEASTIEBOT_USER }}
+                  key: ${{ secrets.BEASTIEBOT_DEPLOY }}
+                  port: 22
+                  script: |
+                      cd BeastieBot
+                      pm2 stop beastie
+                      rm -rf dist
+                      git pull origin master
+                      yarn install
+                      yarn build
+                      pm2 start dist/index.js -n beastie --kill-timeout 4000
